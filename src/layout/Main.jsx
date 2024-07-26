@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import path from "../utils/path";
 import { Home, HomePage } from "../pages/home";
 import { Login } from "../pages/auth";
@@ -9,11 +9,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 
 const Main = () => {
-  const { pathname } = useLocation();
   const [authUser] = useAuthState(auth);
 
   return (
-    <PageLayOut pathname={pathname}>
+    <PageLayOut>
       <Routes>
         <Route
           path={path.PUBLIC}

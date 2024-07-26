@@ -13,11 +13,7 @@ const ProfilePosts = () => {
   }, []);
 
   return (
-    <Grid
-      templateColumns={{ sm: "repeat(3,1fr)", md: "repeat(1,1fr" }}
-      gap={1}
-      columnGap={1}
-    >
+    <Grid templateColumns={"repeat(3,1fr)"} gap={1} columnGap={1}>
       {isLoading ? (
         [...Array(5)].map((_, idx) => (
           <VStack key={idx} gap={4}>
@@ -28,7 +24,7 @@ const ProfilePosts = () => {
         ))
       ) : (
         <>
-          {[...Array(5)].map((_, idx) => (
+          {[...Array(20)].map((_, idx) => (
             <ProfilePost key={idx} />
           ))}
         </>

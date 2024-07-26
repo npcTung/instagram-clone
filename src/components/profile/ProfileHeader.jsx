@@ -8,12 +8,22 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import React, { memo } from "react";
-import { EditProfile, ModalChildren } from "..";
+import React, { memo, useEffect } from "react";
+import { AlertDialgog, EditProfile, ModalChildren, Unfollow } from "..";
 import { useForm } from "react-hook-form";
+import usePreviewImg from "../../hooks/usePreviewImg";
+import useEditProfile from "../../hooks/useEditProfile";
+import useFollowUser from "../../hooks/useFollowUser";
 
 const ProfileHeader = ({ data, isEdit }) => {
   const isShowEditUser = useDisclosure();
+  const showAlert = useDisclosure();
+  const { handleImageChange, selectedFile, setSelectedFile } = usePreviewImg();
+  const { editProFile, isUpdating } = useEditProfile();
+  const { isFollowing, isUpdateFollwing, handleFollowUser } = useFollowUser(
+    data?.uid,
+    showAlert.onClose
+  );
   const {
     handleSubmit,
     register,
@@ -22,12 +32,30 @@ const ProfileHeader = ({ data, isEdit }) => {
     watch,
   } = useForm();
 
-  const handleEditProfile = (dataProfile) => {
-    console.log(dataProfile);
+  const handleEditProfile = async (dataProfile) => {
+    await editProFile(dataProfile, selectedFile);
+    setSelectedFile(null);
+    isShowEditUser.onClose();
   };
+
+  useEffect(() => {
+    if (watch("avatar")?.length > 0) handleImageChange(watch("avatar")[0]);
+  }, [watch("avatar")]);
 
   return (
     <>
+      <AlertDialgog
+        isOpen={showAlert.isOpen}
+        onClose={showAlert.onClose}
+        isCentered
+      >
+        <Unfollow
+          onClose={showAlert.onClose}
+          data={data}
+          isLoading={isUpdateFollwing}
+          handleOnclick={handleFollowUser}
+        />
+      </AlertDialgog>
       <ModalChildren
         isOpen={isShowEditUser.isOpen}
         onClose={isShowEditUser.onClose}
@@ -36,22 +64,22 @@ const ProfileHeader = ({ data, isEdit }) => {
         close
         isShowFooter
         size={"xl"}
-        handelOnclick={handleSubmit(handleEditProfile)}
+        isLoading={isUpdating}
         textHeader={
           <Text as={"h1"} p={2} textAlign={"center"}>
             Chỉnh sửa hồ sơ
           </Text>
         }
-        children={
-          <EditProfile
-            register={register}
-            errors={errors}
-            data={data}
-            reset={reset}
-            watch={watch}
-          />
-        }
-      />
+        handelOnclick={handleSubmit(handleEditProfile)}
+      >
+        <EditProfile
+          register={register}
+          errors={errors}
+          data={data}
+          reset={reset}
+          selectedFile={selectedFile}
+        />
+      </ModalChildren>
       <Flex
         gap={{ base: 4, sm: 10 }}
         py={10}
@@ -81,7 +109,7 @@ const ProfileHeader = ({ data, isEdit }) => {
                 <Button
                   colorScheme={"gray"}
                   bg={useColorModeValue("gray.300", "gray.700")}
-                  size={{ base: "sx", md: "sm" }}
+                  size={"sm"}
                   onClick={isShowEditUser.onOpen}
                 >
                   Chỉnh sửa hồ sơ
@@ -91,17 +119,23 @@ const ProfileHeader = ({ data, isEdit }) => {
                   <Button
                     colorScheme={"gray"}
                     bg={useColorModeValue("gray.300", "gray.700")}
-                    size={{ base: "sx", md: "sm" }}
+                    size={"sm"}
+                    isLoading={isUpdateFollwing}
+                    onClick={() =>
+                      isFollowing ? showAlert.onOpen() : handleFollowUser()
+                    }
                   >
-                    Theo dõi
+                    {isFollowing ? "Đang theo dõi" : "Theo dõi"}
                   </Button>
-                  <Button
-                    colorScheme={"gray"}
-                    bg={useColorModeValue("gray.300", "gray.700")}
-                    size={{ base: "sx", md: "sm" }}
-                  >
-                    Nhắn tin
-                  </Button>
+                  {isFollowing && (
+                    <Button
+                      colorScheme={"gray"}
+                      bg={useColorModeValue("gray.300", "gray.700")}
+                      size={"sm"}
+                    >
+                      Nhắn tin
+                    </Button>
+                  )}
                 </>
               )}
             </Flex>

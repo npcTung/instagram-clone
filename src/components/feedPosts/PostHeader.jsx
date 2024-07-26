@@ -33,21 +33,18 @@ const PostHeader = () => {
         isOpen={showAlert.isOpen}
         onClose={showAlert.onClose}
         isCentered
-        children={<Unfollow onClose={showAlert.onClose} />}
-      />
+      >
+        <Unfollow onClose={showAlert.onClose} />
+      </AlertDialgog>
       <ModalChildren
         isCentered
         size={"sm"}
         bg={"#262626"}
         isOpen={showOptionMenu.isOpen}
         onClose={showOptionMenu.onClose}
-        children={
-          <OptionListPost
-            showOptionMenu={showOptionMenu}
-            showAlert={showAlert}
-          />
-        }
-      />
+      >
+        <OptionListPost showOptionMenu={showOptionMenu} showAlert={showAlert} />
+      </ModalChildren>
       <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
         <Flex alignItems={"center"} gap={2}>
           <Tooltip

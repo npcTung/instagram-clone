@@ -56,29 +56,28 @@ const Login = () => {
             Quên mật khẩu
           </Text>
         }
-        children={
-          <Box
-            p={4}
-            borderY={"1px solid"}
-            borderColor={useColorModeValue("gray.300", "gray.600")}
-          >
-            <FormLabel htmlFor="email">Địa chỉ email</FormLabel>
-            <Input
-              id="email"
-              type="email"
-              placeholder={"Email..."}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {sendError && (
-              <Alert status="error" borderRadius={"md"}>
-                <AlertIcon />
-                <AlertDescription>{sendError.message}</AlertDescription>
-              </Alert>
-            )}
-          </Box>
-        }
-      />
+      >
+        <Box
+          p={4}
+          borderY={"1px solid"}
+          borderColor={useColorModeValue("gray.300", "gray.600")}
+        >
+          <FormLabel htmlFor="email">Địa chỉ email</FormLabel>
+          <Input
+            id="email"
+            type="email"
+            placeholder={"Email..."}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {sendError && (
+            <Alert status="error" borderRadius={"md"}>
+              <AlertIcon />
+              <AlertDescription>{sendError.message}</AlertDescription>
+            </Alert>
+          )}
+        </Box>
+      </ModalChildren>
       <form
         onSubmit={handleSubmit(handleLogin)}
         style={{

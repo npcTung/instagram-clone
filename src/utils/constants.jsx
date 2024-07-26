@@ -34,15 +34,15 @@ export const InstagramMobileLogo = () => (
   </svg>
 );
 
-export const SearchLogo = () => (
+export const SearchLogo = ({ size = 24 }) => (
   <svg
     aria-label="Search"
     color={useColorModeValue("rgb(0,0,0)", "rgb(245, 245, 245)")}
     fill={useColorModeValue("rgb(0,0,0)", "rgb(245, 245, 245)")}
-    height="24"
+    height={size}
     role="img"
     viewBox="0 0 24 24"
-    width="24"
+    width={size}
   >
     <path
       d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z"

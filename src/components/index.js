@@ -31,3 +31,11 @@ export { default as SuggestedUser } from "./SuggestedUsers/SuggestedUser";
 export { default as SuggestedHeader } from "./SuggestedUsers/SuggestedHeader";
 // comment
 export { default as Comment } from "./comment/Comment";
+// sidebar
+export { default as SidebarItem } from "./sidebars/SidebarItem";
+export { default as Home } from "./sidebars/Home";
+export { default as Search } from "./sidebars/Search";
+export { default as Notifications } from "./sidebars/Notifications";
+export { default as CreatePost } from "./sidebars/CreatePost";
+export { default as ChatLink } from "./sidebars/ChatLink";
+export { default as ProfileLink } from "./sidebars/ProfileLink";

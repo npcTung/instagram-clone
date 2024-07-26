@@ -60,7 +60,7 @@ const PostFooter = ({ isPostDetail }) => {
   };
 
   return (
-    <Flex flexDir={"column"} w={"full"} mx={"auto"}>
+    <Flex flexDir={"column"} w={"full"} mx={"auto"} pb={{ base: 2 }}>
       <ModalChildren
         close
         isOpen={isOpen}
@@ -85,7 +85,7 @@ const PostFooter = ({ isPostDetail }) => {
         </Box>
       </Flex>
       <Text>{`${likes.toLocaleString("vi-VN")} lượt thích`}</Text>
-      {!isPostDetail && (
+      {!isPostDetail ? (
         <>
           <Flex alignItems={"center"} gap={1} fontSize={"sm"}>
             <Tooltip
@@ -114,8 +114,23 @@ const PostFooter = ({ isPostDetail }) => {
             Xem tất cả 1,000 bình luận
           </Text>
         </>
+      ) : (
+        <Text
+          as={"small"}
+          opacity={0.5}
+          cursor={"pointer"}
+          _hover={{ textDecor: "underline" }}
+          transition={"all 0.5s ease"}
+          w={"fit-content"}
+        >
+          1 ngày
+        </Text>
       )}
-      <InputGroup borderBottomWidth={1} borderColor={"gray.300"}>
+      <InputGroup
+        display={{ base: "none", md: "block" }}
+        borderBottomWidth={1}
+        borderColor={"gray.300"}
+      >
         <InputLeftElement borderStyle={"none"} bg={"transparent"}>
           <Popover placement="top">
             <PopoverTrigger>

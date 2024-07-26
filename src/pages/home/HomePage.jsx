@@ -16,7 +16,7 @@ const HomePage = () => {
           maxW={"300px"}
           h={"fit-content"}
         >
-          <SuggestedUsers />
+          {/* <SuggestedUsers /> */}
         </Box>
       </Flex>
     </Container>

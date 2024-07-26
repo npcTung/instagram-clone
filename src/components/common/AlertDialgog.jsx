@@ -33,6 +33,7 @@ const AlertDialgog = ({
             borderBottomWidth={1}
             fontSize="lg"
             fontWeight="bold"
+            textAlign={"center"}
           >
             Thông báo
           </AlertDialogHeader>

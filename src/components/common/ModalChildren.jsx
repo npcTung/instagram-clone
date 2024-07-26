@@ -23,6 +23,7 @@ const ModalChildren = ({
   bg,
   handelOnclick,
   isLoading,
+  motionPreset,
 }) => {
   return (
     <Modal
@@ -31,6 +32,7 @@ const ModalChildren = ({
       isCentered={isCentered}
       size={size}
       scrollBehavior={scrollBehavior ? "inside" : "outside"}
+      motionPreset={motionPreset}
     >
       <ModalOverlay />
       <ModalContent bg={bg}>

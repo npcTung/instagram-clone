@@ -39,24 +39,26 @@ const PostDetail = () => {
         isOpen={showAlert.isOpen}
         onClose={showAlert.onClose}
         isCentered
-        children={<Unfollow onClose={showAlert.onClose} />}
-      />
+      >
+        <Unfollow onClose={showAlert.onClose} />
+      </AlertDialgog>
       <ModalChildren
         isCentered
         size={"sm"}
         bg={"#262626"}
         isOpen={showOptionMenu.isOpen}
         onClose={showOptionMenu.onClose}
-        children={
-          <OptionListPost
-            showOptionMenu={showOptionMenu}
-            showAlert={showAlert}
-          />
-        }
-      />
-      <Flex gap={4} w={{ base: "90%", sm: "70%", md: "full" }} mx={"auto"}>
+      >
+        <OptionListPost showOptionMenu={showOptionMenu} showAlert={showAlert} />
+      </ModalChildren>
+      <Flex
+        flexDir={{ base: "column", md: "row" }}
+        gap={4}
+        w={{ base: "90%", sm: "70%", md: "full" }}
+        mx={"auto"}
+      >
         <Box
-          borderLeftRadius={4}
+          borderLeftRadius={{ base: "none", md: 4 }}
           overflow={"hidden"}
           borderColor={"whiteAlpha.300"}
           flex={1.5}
@@ -108,6 +110,9 @@ const PostDetail = () => {
             ))}
           </VStack>
           <Divider my={4} bg={"gray.500"} />
+          <PostFooter isPostDetail />
+        </Flex>
+        <Flex display={{ base: "flex", md: "none" }}>
           <PostFooter isPostDetail />
         </Flex>
       </Flex>

@@ -15,17 +15,21 @@ import useGetUserByUserName from "../../hooks/useGetUserByUserName";
 import useAuthStore from "../../store/authStore";
 import { Link as RouterLink } from "react-router-dom";
 import path from "../../utils/path";
+import icons from "../../utils/icons";
+
+const { IoWarningOutline } = icons;
 
 const UserNotFound = () => (
   <Flex
     flexDir={"column"}
-    textAlign={"center"}
     mx={"auto"}
     h={"100vh"}
+    alignItems={"center"}
     justifyContent={"center"}
   >
-    <Text as={"span"} fontSize={"2xl"}>
-      User Not Found
+    <IoWarningOutline size={100} color="#FFB90F" />
+    <Text as={"span"} fontSize={"2xl"} cursor={"default"}>
+      Không tìm thấy người dùng
     </Text>
     <Link
       as={RouterLink}
@@ -62,9 +66,9 @@ const ProfileHeaderSkeleton = () => (
 
 const UserPage = () => {
   const { userName } = useParams();
-  const { isLoading, user } = useGetUserByUserName(userName);
-  const currentUser = useAuthStore((state) => state.user);
-  const isEdit = user?.uid === currentUser.uid ? true : false;
+  const { isLoading, user } = useGetUserByUserName(userName.split("@")[1]);
+  const currentUser = useAuthStore((state) => state.authUser);
+  const isEdit = user?.uid === currentUser.uid;
   const userNotFound = !isLoading && !user;
 
   if (userNotFound) return <UserNotFound />;
@@ -79,14 +83,17 @@ const UserPage = () => {
         mx={"auto"}
         flexDir={"column"}
       >
-        {!isLoading && user && <ProfileHeader data={user} isEdit={isEdit} />}
-        {isLoading && <ProfileHeaderSkeleton />}
+        {!isLoading ? (
+          user && <ProfileHeader data={user} isEdit={isEdit} />
+        ) : (
+          <ProfileHeaderSkeleton />
+        )}
       </Flex>
       <Flex
         px={{ base: 2, sm: 4 }}
         maxW={"full"}
         mx={"auto"}
-        borderTop={"2px solid"}
+        borderTop={"1px solid"}
         borderColor={useColorModeValue("gray.300", "gray.800")}
         direction={"column"}
         gap={2}

@@ -14,16 +14,16 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { InstagramLogo, InstagramMobileLogo } from "../../utils/constants";
 import icons from "../../utils/icons";
-import { sidebarItems } from "../../utils/helpers";
 import useLogout from "../../hooks/useLogout";
 import useAuthStore from "../../store/authStore";
+import { SidebarItem } from "../../components";
 
 const { BsList, TbLogout2, FaMoon, FaSun, IoSettingsSharp } = icons;
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { logout } = useLogout();
-  const currrentData = useAuthStore((state) => state.user);
+  const currrentData = useAuthStore((state) => state.authUser);
 
   if (!currrentData) return null;
 
@@ -63,61 +63,7 @@ const Header = () => {
             <InstagramMobileLogo />
           </Link>
           <Flex direction={"column"} gap={5} cursor={"pointer"}>
-            {sidebarItems.map((item, idx) => (
-              <Tooltip
-                key={idx}
-                hasArrow
-                label={item.text}
-                placement="right"
-                ml={1}
-                openDelay={500}
-                display={{ base: "block", md: "none" }}
-              >
-                <Link
-                  to={item.link || null}
-                  display={"flex"}
-                  as={RouterLink}
-                  alignItems={"center"}
-                  gap={4}
-                  _hover={{ bg: "whiteAlpha.400" }}
-                  borderRadius={6}
-                  p={2}
-                  w={{ base: 10, md: "full" }}
-                  justifyContent={{ base: "center", md: "flex-start" }}
-                >
-                  {item.icon}
-                  <Box display={{ base: "none", md: "block" }}>{item.text}</Box>
-                </Link>
-              </Tooltip>
-            ))}
-            <Tooltip
-              hasArrow
-              label={"Trang cá nhân"}
-              placement="right"
-              ml={1}
-              openDelay={500}
-              display={{ base: "block", md: "none" }}
-            >
-              <Link
-                to={`/${currrentData?.userName}` || null}
-                display={"flex"}
-                as={RouterLink}
-                alignItems={"center"}
-                gap={4}
-                _hover={{ bg: "whiteAlpha.400" }}
-                borderRadius={6}
-                p={2}
-                w={{ base: 10, md: "full" }}
-                justifyContent={{ base: "center", md: "flex-start" }}
-              >
-                <Avatar
-                  size={"sm"}
-                  name={currrentData?.fullName}
-                  src={currrentData?.avatar}
-                />
-                <Box display={{ base: "none", md: "block" }}>Trang cá nhân</Box>
-              </Link>
-            </Tooltip>
+            <SidebarItem />
           </Flex>
           <Tooltip
             hasArrow
@@ -134,9 +80,10 @@ const Header = () => {
               w={{ base: 10, md: "full" }}
               mt={"auto"}
               justifyContent={{ base: "center", md: "flex-start" }}
+              zIndex={50}
             >
               <Menu size={"full"}>
-                <MenuButton>
+                <MenuButton w={{ base: 10, md: "full" }}>
                   <Flex gap={4} p={2} alignItems={"center"} w={"full"}>
                     <BsList size={20} />
                     <Box display={{ base: "none", md: "block" }}>Tùy chọn</Box>

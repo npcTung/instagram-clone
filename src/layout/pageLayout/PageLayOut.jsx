@@ -4,6 +4,7 @@ import Header from "../header/Header";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/firebase";
 import path from "../../utils/path";
+import { useLocation } from "react-router-dom";
 
 const PageLayoutSpinner = () => (
   <Flex
@@ -16,7 +17,8 @@ const PageLayoutSpinner = () => (
   </Flex>
 );
 
-const PageLayOut = ({ children, pathname }) => {
+const PageLayOut = ({ children }) => {
+  const { pathname } = useLocation();
   const [user, loading] = useAuthState(auth);
   const canRenderHeader = pathname !== path.LOGIN && user;
 

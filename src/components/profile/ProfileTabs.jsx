@@ -12,7 +12,7 @@ const { BsGrid3X3, BsBookmark, BsSuitHeart } = icons;
 
 const ProfileTabs = () => {
   return (
-    <Tabs position="relative" variant="unstyled" align="center">
+    <Tabs position="relative" align="center">
       <TabList>
         <Tab fontSize={"sm"} display={"flex"} gap={1}>
           <BsGrid3X3 />
@@ -27,7 +27,6 @@ const ProfileTabs = () => {
           Đã thích
         </Tab>
       </TabList>
-      <TabIndicator mt="-39px" height="2px" bg="gray.500" borderRadius="1px" />
     </Tabs>
   );
 };

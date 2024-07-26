@@ -4,6 +4,7 @@ import {
   IoInformationCircle,
   IoHome,
   IoSettingsSharp,
+  IoWarningOutline,
 } from "react-icons/io5";
 import { FaSun, FaMoon, FaUserLarge, FaPhone } from "react-icons/fa6";
 import {
@@ -48,6 +49,7 @@ const icons = {
   FaPhone,
   CgGenderFemale,
   CgGenderMale,
+  IoWarningOutline,
 };
 
 export default icons;

@@ -1,23 +1,16 @@
 import {
   Avatar,
-  Box,
   Center,
   Flex,
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
-  InputRightElement,
   Stack,
-  Textarea,
-  Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { memo, useEffect, useState } from "react";
 import icons from "../../utils/icons";
-import { getBase64 } from "../../utils/helpers";
 import { InputForm, SelectForm } from "..";
-import useShowToast from "../../hooks/useShowToast";
 
 const {
   PiLinkSimpleBold,
@@ -35,30 +28,8 @@ const genders = [
   { code: "female", value: "Nữ" },
 ];
 
-const EditProfile = ({ register, errors, data, reset, watch }) => {
+const EditProfile = ({ register, errors, data, reset, selectedFile }) => {
   const [avatar, setAvatar] = useState(null);
-  const { showToast } = useShowToast();
-
-  const handlePreviewAvatar = async (file) => {
-    if (
-      file.type !== "image/png" &&
-      file.type !== "image/jpg" &&
-      file.type !== "image/jpeg"
-    ) {
-      showToast(
-        "Định dạng ảnh sai chỉ nhận định dạng file có đuôi .png hoặc .jpg",
-        "info"
-      );
-      return;
-    } else {
-      const base64 = await getBase64(file);
-      setAvatar(base64);
-    }
-  };
-
-  useEffect(() => {
-    if (watch("avatar")?.length > 0) handlePreviewAvatar(watch("avatar")[0]);
-  }, [watch("avatar")]);
 
   useEffect(() => {
     reset({
@@ -92,7 +63,7 @@ const EditProfile = ({ register, errors, data, reset, watch }) => {
           <FormLabel>Avatar</FormLabel>
           <Stack direction={["column", "row"]} spacing={6}>
             <Center>
-              <Avatar size="2xl" src={avatar} />
+              <Avatar size="2xl" src={selectedFile || avatar} />
             </Center>
             <Center w="full">
               <FormControl>
@@ -191,7 +162,7 @@ const EditProfile = ({ register, errors, data, reset, watch }) => {
           errors={errors}
           isRequired
           disabled
-          iconLeft={<MdEmail />}
+          iconLeft={<MdEmail size={20} />}
           validate={{
             required: "Điền thông tin bắt buộc.",
             pattern: {
@@ -208,37 +179,24 @@ const EditProfile = ({ register, errors, data, reset, watch }) => {
           wf
           errors={errors}
           isRequired
-          iconLeft={<PiLinkSimpleBold />}
+          iconLeft={<PiLinkSimpleBold size={20} />}
           validate={{
             required: "Điền thông tin bắt buộc.",
           }}
         />
-        <FormControl isRequired>
-          <FormLabel htmlFor="bio">Mô tả</FormLabel>
-          <InputGroup>
-            <Textarea
-              id="bio"
-              {...register("bio", { required: "Điền thông tin bắt buộc." })}
-              w={"full"}
-              minH={"150px"}
-              maxH={"300px"}
-              placeholder="Mô tả..."
-            />
-            {errors["bio"] && (
-              <InputRightElement>
-                <Tooltip
-                  hasArrow
-                  label={errors["bio"]?.message}
-                  placement="right"
-                >
-                  <Box>
-                    <IoInformationCircle size={20} color="red" />
-                  </Box>
-                </Tooltip>
-              </InputRightElement>
-            )}
-          </InputGroup>
-        </FormControl>
+        <InputForm
+          label={"Mô tả"}
+          id={"bio"}
+          register={register}
+          placeholder={"Mô tả..."}
+          wf
+          errors={errors}
+          isRequired
+          iconLeft={<IoInformationCircle size={20} />}
+          validate={{
+            required: "Điền thông tin bắt buộc.",
+          }}
+        />
       </Stack>
     </Flex>
   );
